@@ -5,5 +5,6 @@
         public string Category { get; set; }
         public decimal PurchasePrice { get; set; }
         public decimal RetailPrice { get; set; }
+
     }
 }
