@@ -7,13 +7,19 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using SportsStore.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace SportsStore {
     public class Startup {
+        public Startup(IConfiguration config) => Configuration = config;
+        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services) {
             services.AddMvc();
-            services.AddSingleton<IRepository, DataRepository>();
+            services.AddTransient<IRepository, DataRepository>();
+            string conString = Configuration["ConnectionStrings:DefaultConnection"];
+            services.AddDbContext<DataContext>(options => options.UseSqlServer(conString));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
