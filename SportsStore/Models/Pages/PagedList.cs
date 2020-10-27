@@ -2,6 +2,7 @@
 using System.Linq;
 using System;
 using System.Linq.Expressions;
+using System.Diagnostics;
 
 namespace SportsStore.Models.Pages
 {
@@ -30,9 +31,13 @@ namespace SportsStore.Models.Pages
                 }
             }
 
+            Stopwatch sw = Stopwatch.StartNew();
+            Console.Clear();
 
             TotalPages = query.Count() / PageSize;
             AddRange(query.Skip((CurrentPage - 1) * PageSize).Take(PageSize));
+
+            Console.WriteLine($"Query Time: {sw.ElapsedMilliseconds} ms");
 
         }
 
